@@ -1,0 +1,43 @@
+openapi: 3.0.0
+
+info:
+    title: Ping API
+    version: 1.0.0
+
+servers:
+  - url: http://localhost:3000
+
+paths:
+    /chronicle/agreement:
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                ping:
+                                    type: string
+            responses:
+                200:
+                    description: Returns value of ping
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    pong:
+                                        type: string
+
+    /chronicle/contract:
+        get:
+            responses:
+                200:
+                    description: Returns value.
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    pong:
+                                        type: string
