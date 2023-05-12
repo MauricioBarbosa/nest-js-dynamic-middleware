@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { OpenAPIV3 } from 'express-openapi-validator/dist/framework/types';
 import { ChroniclesService } from './chronicles.service';
-import { MiddlewareServiceSingleton } from './middleware-service/middleware.service';
+import { SwaggerParserValidationPipe } from './pipe/swagger-parser-validation.pipe';
 
 @Controller('chronicle')
 export class ChronicleController {
@@ -26,9 +26,12 @@ export class ChronicleController {
     return 'agreement';
   }
 
-  @Post(':slug/open-api')
-  register(@Param('slug') slug: string, @Body() openApi: OpenAPIV3.Document) {
-    MiddlewareServiceSingleton.getInstance().addMiddleware(slug, openApi);
+  @Post('/open-api')
+  register(
+    @Param('slug') slug: string,
+    @Body(new SwaggerParserValidationPipe()) openApi: OpenAPIV3.Document,
+  ) {
+    //MiddlewareServiceSingleton.getInstance().addMiddleware(slug, openApi);
 
     return 'openApi';
   }
